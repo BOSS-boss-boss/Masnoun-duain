@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masnoon Duas - All-in-One Islamic Supplications</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #4caf50;
+            --dark: #212121;
+            --light: #f5f5f5;
+            --gray: #757575;
+            --border: #e0e0e0;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --dark: #f5f5f5;
+            --light: #212121;
+            --card-bg: #333333;
+            --text: #f5f5f5;
+            --border: #444444;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px var(--shadow);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 500px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background-color: var(--card-bg);
+            color: var(--text);
+            font-size: 1rem;
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .category-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .dua-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .dua-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dua-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .dua-category {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .dua-content {
+            margin: 15px 0;
+        }
+
+        .arabic {
+            font-size: 1.8rem;
+            line-height: 2.2;
+            text-align: right;
+            direction: rtl;
+            font-family: 'Amiri', 'Noto Naskh Arabic', serif;
+            margin: 15px 0;
+            color: #2c5aa0;
+        }
+
+        .translation {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(26, 115, 232, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .translation-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary-dark);
+        }
+
+        .urdu {
+            font-family: 'Jameel Noori Nastaleeq', 'Nafees', serif;
+            font-size: 1.4rem;
+            direction: rtl;
+            text-align: right;
+            margin: 15px 0;
+            color: #2c5aa0;
+        }
+
+        .when {
+            font-style: italic;
+            color: var(--gray);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .favorite-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+        }
+
+        .favorite-btn.favorited {
+            color: #ff5252;
+        }
+
+        .share-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .share-btn i {
+            font-size: 1.1rem;
+        }
+
+        .favorites-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+
+        .no-favorites {
+            text-align: center;
+            padding: 30px;
+            color: var(--gray);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 30px;
+            color: var(--gray);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            font-size: 1.8rem;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .dua-title {
+                font-size: 1.1rem;
+            }
+            
+            .arabic {
+                font-size: 1.5rem;
+            }
+            
+            .urdu {
+                font-size: 1.2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .search-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-pray"></i> Masnoon Duas</h1>
+            <p class="subtitle">Authentic Islamic Supplications for Daily Life - Fully Offline</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="controls">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search Duas...">
+            </div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i> Dark Mode
+            </button>
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active" data-category="all">All Duas</button>
+            <button class="category-btn" data-category="daily">Daily Routine</button>
+            <button class="category-btn" data-category="travel">Travel</button>
+            <button class="category-btn" data-category="forgiveness">Forgiveness</button>
+            <button class="category-btn" data-category="protection">Protection</button>
+            <button class="category-btn" data-category="parents">Parents & Knowledge</button>
+            <button class="category-btn" data-category="distress">Distress & Anxiety</button>
+            <button class="category-btn" data-category="sleep">Sleep & Waking</button>
+            <button class="category-btn" data-category="eating">Eating</button>
+            <button class="category-btn" data-category="clothing">Clothing</button>
+            <button class="category-btn" data-category="toilet">Toilet</button>
+            <button class="category-btn" data-category="weather">Weather</button>
+            <button class="category-btn" data-category="favorites">Favorites</button>
+        </div>
+
+        <div id="duasContainer"></div>
+    </div>
+
+    <button class="whatsapp-btn" id="whatsappBtn">
+        <i class="fab fa-whatsapp"></i>
+    </button>
+
+    <footer>
+        <div class="container">
+            <p>Masnoon Duas - All-in-One Islamic Supplications (Offline)</p>
+            <p>© 2023 Islamic Resources | Fully Offline Application</p>
+        </div>
+    </footer>
+
+    <script>
+        // Dua data
+        const duas = [
+            {
+                id: 1,
+                title: "Dua for Entering the Home",
+                arabic: "اللّٰھُمَّ اِنِّیْ اَسْئَلُکَ خَیْرَالْمَوْلِجِ وَخَیْرَالْمَخْرَجِ بِسْمِ اللّٰہِ وَلَجْتُ وَلَکَ الْحَمْدُ",
+                english: "O Allah, I ask You for the best entrance and the best exit. In the name of Allah, I have entered, and all praise is for You.",
+                urdu: "اے اللہ! میں تجھ سے اچھے داخلے اور نکلنے کی دعا مانگتا ہوں۔ اللہ کے نام سے داخل ہوا اور تمام تعریفیں تیری ہیں۔",
+                category: "daily",
+                when: "When entering your home."
+            },
+            {
+                id: 2,
+                title: "Dua for Leaving the Home",
+                arabic: "بِسْمِ اللّٰہِ تَوَكَّلْتُ عَلَى اللّٰہِ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللّٰہِ",
+                english: "In the name of Allah, I place my trust in Allah, and there is no power and no strength except with Allah.",
+                urdu: "اللہ کے نام سے، میں اللہ پر بھروسہ کرتا ہوں، اور اللہ کے سوا کوئی طاقت اور قوت نہیں۔",
+                category: "daily",
+                when: "When leaving your home."
+            },
+            {
+                id: 3,
+                title: "Dua When Waking Up",
+                arabic: "الْحَمْدُ لِلّٰہِ الَّذِیْ أَحْیَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَیْہِ النُّشُوْرُ",
+                english: "Praise is to Allah Who gave us life after causing us to die, and to Him is the resurrection.",
+                urdu: "تمام تعریفیں اللہ کے لیے ہیں جس نے ہمیں موت کے بعد زندگی دی، اور اسی کی طرف ہم سب لوٹ کر جائیں گے۔",
+                category: "sleep",
+                when: "Upon waking up."
+            },
+            {
+                id: 4,
+                title: "Dua Before Eating",
+                arabic: "بِسْمِ اللّٰہِ وَعَلَى بَرَکَۃِ اللّٰہِ",
+                english: "In the name of Allah and with the blessings of Allah.",
+                urdu: "اللہ کے نام سے اور اللہ کی برکت کے ساتھ۔",
+                category: "eating",
+                when: "Before starting to eat."
+            },
+            {
+                id: 5,
+                title: "Dua After Eating",
+                arabic: "الْحَمْدُ لِلّٰہِ الَّذِیْ أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مِنَ الْمُسْلِمِیْنَ",
+                english: "Praise is to Allah Who fed us, gave us drink, and made us Muslims.",
+                urdu: "تمام تعریفیں اللہ کے لیے ہیں جس نے ہمیں کھلایا، پلایا اور ہمیں مسلمان بنایا۔",
+                category: "eating",
+                when: "After finishing eating."
+            },
+            {
+                id: 6,
+                title: "Dua for Entering the Toilet",
+                arabic: "اللّٰہُمَّ إِنِّيْ أَعُوْذُ بِكَ مِنَ الْخُبْثِ وَالْخَبَائِثِ",
+                english: "O Allah, I seek refuge with You from all evil and evil-doers.",
+                urdu: "اے اللہ! میں تجھ سے ناپاک چیزوں اور ناپاک عورتوں سے پناہ مانگتا ہوں۔",
+                category: "toilet",
+                when: "Before entering the toilet."
+            },
+            {
+                id: 7,
+                title: "Dua After Leaving the Toilet",
+                arabic: "غُفْرَانَكَ",
+                english: "I seek Your forgiveness.",
+                urdu: "میں تیری معافی چاہتا ہوں۔",
+                category: "toilet",
+                when: "After leaving the toilet."
+            },
+            {
+                id: 8,
+                title: "Dua for Wearing Clothes",
+                arabic: "الْحَمْدُ لِلّٰہِ الَّذِیْ كَسَانِيْ هٰذَا وَرَزَقَنِیْہِ مِنْ غَیْرِ حَوْلٍ مِّنِّیْ وَلَا قُوَّۃٍ",
+                english: "Praise is to Allah Who clothed me with this and provided it to me, though I was powerless and unable.",
+                urdu: "تمام تعریفیں اللہ کے لیے ہیں جس نے مجھے یہ لباس پہنا اور یہ مجھے دیا، جب کہ میں بے طاقت تھا۔",
+                category: "clothing",
+                when: "When wearing new clothes."
+            },
+            {
+                id: 9,
+                title: "Dua for Removing Clothes",
+                arabic: "الْحَمْدُ لِلّٰہِ الَّذِیْ أَذْهَبَ عَنِّيْ الْأَذى وَعَافَانِیْ",
+                english: "Praise is to Allah Who removed harm from me and gave me relief.",
+                urdu: "تمام تعریفیں اللہ کے لیے ہیں جس نے میرے نقصان کو دور کیا اور مجھے تندرستی دی۔",
+                category: "clothing",
+                when: "When removing clothes."
+            },
+            {
+                id: 10,
+                title: "Dua for Before Sleeping",
+                arabic: "بِاسْمِكَ اللّٰہُمَّ أَمُوْتُ وَأَحْیَا",
+                english: "In Your name, O Allah, I die and I live.",
+                urdu: "اے اللہ، تیرے نام سے میں مرتا اور جیتا ہوں۔",
+                category: "sleep",
+                when: "Before going to sleep."
+            },
+            {
+                id: 11,
+                title: "Dua for After Waking up (2nd)",
+                arabic: "اَلْحَمْدُ لِلّٰہِ الَّذِیْ أَحْیَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَیْہِ النُّشُوْرُ",
+                english: "Praise be to Allah who gave us life after causing us to die and to Him is the resurrection.",
+                urdu: "تمام تعریفیں اللہ کے لیے ہیں جس نے ہمیں موت کے بعد زندگی دی، اور اسی کی طرف ہم سب لوٹ کر جائیں گے۔",
+                category: "sleep",
+                when: "Upon waking."
+            },
+            {
+                id: 12,
+                title: "Dua for Distress & Anxiety",
+                arabic: "اللّٰھُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ",
+                english: "O Allah, I seek refuge in You from worry and grief.",
+                urdu: "اے اللہ! میں تجھ سے غم اور غصہ سے پناہ مانگتا ہوں۔",
+                category: "distress",
+                when: "When feeling anxious or distressed."
+            },
+            {
+                id: 13,
+                title: "Dua for Seeking Forgiveness (Sayyidul Istighfar)",
+                arabic: "اللّٰھُمَّ أَنْتَ رَبِّي لَا إِلٰہَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ...",
+                english: "O Allah, You are my Lord, none has the right to be worshipped except You, You created me and I am Your servant...",
+                urdu: "اے اللہ! تو میرا رب ہے، تیرے سوا کوئی معبود نہیں، تو نے مجھے پیدا کیا اور میں تیرا بندہ ہوں...",
+                category: "forgiveness",
+                when: "To seek Allah’s forgiveness."
+            },
+            {
+                id: 14,
+                title: "Dua for Traveling",
+                arabic: "بِسْمِ اللّٰہِ تَوَكَّلْتُ عَلَى اللّٰہِ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللّٰہِ",
+                english: "In the name of Allah, I place my trust in Allah and there is no might nor power except with Allah.",
+                urdu: "اللہ کے نام سے، میں اللہ پر بھروسہ کرتا ہوں، اور اللہ کے سوا کوئی طاقت اور قوت نہیں۔",
+                category: "travel",
+                when: "When starting a journey."
+            },
+            {
+                id: 15,
+                title: "Dua for Rain",
+                arabic: "اَللّٰھُمَّ صَيِّبًا نَافِعًا",
+                english: "O Allah, [bring] beneficial rain.",
+                urdu: "اے اللہ! فائدہ مند بارش نازل فرما۔",
+                category: "weather",
+                when: "When it starts raining or when praying for rain."
+            },
+            {
+                id: 16,
+                title: "Dua for Protection from Evil Eye",
+                arabic: "أَعُوذُ بِكَلِمَاتِ اللّٰہِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+                english: "I seek refuge in the perfect words of Allah from the evil of what He has created.",
+                urdu: "میں اللہ کے کامل الفاظ سے ہر مخلوق کے شر سے پناہ مانگتا ہوں۔",
+                category: "protection",
+                when: "For protection from evil eye and harm."
+            },
+            {
+                id: 17,
+                title: "Dua for Parents",
+                arabic: "رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
+                english: "My Lord, have mercy on them as they brought me up when I was small.",
+                urdu: "اے میرے رب! ان پر رحم فرما جس طرح انہوں نے مجھے بچپن میں پالا تھا۔",
+                category: "parents",
+                when: "For praying for parents."
+            },
+            {
+                id: 18,
+                title: "Dua for Seeking Knowledge",
+                arabic: "اللّٰھُمَّ انْفَعْنِي بِمَا عَلَّمْتَنِيْ وَعَلِّمْنِي مَا يَنْفَعُنِيْ",
+                english: "O Allah, benefit me with what You have taught me and teach me that which will benefit me.",
+                urdu: "اے اللہ! مجھے اس علم سے فائدہ پہنچا جو تو نے مجھے سکھایا اور مجھے ایسا علم سکھا جو مجھے فائدہ پہنچائے۔",
+                category: "parents",
+                when: "When seeking knowledge."
+            }
+        ];
+
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const themeToggle = document.getElementById('themeToggle');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const duasContainer = document.getElementById('duasContainer');
+        const whatsappBtn = document.getElementById('whatsappBtn');
+
+        // State
+        let currentCategory = 'all';
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let darkMode = localStorage.getItem('darkMode') === 'true';
+
+        // Initialize
+        function init() {
+            renderDuas();
+            setupEventListeners();
+            applyTheme();
+        }
+
+        // Render Duas
+        function renderDuas(filteredDuas = null) {
+            const duasToRender = filteredDuas || 
+                (currentCategory === 'favorites' ? 
+                    duas.filter(dua => favorites.includes(dua.id)) : 
+                    (currentCategory === 'all' ? duas : duas.filter(dua => dua.category === currentCategory)));
+
+            if (duasToRender.length === 0) {
+                duasContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search fa-3x" style="margin-bottom: 20px; color: var(--gray);"></i>
+                        <h3>No Duas Found</h3>
+                        <p>Try adjusting your search or category filter</p>
+                    </div>
+                `;
+                return;
+            }
+
+            duasContainer.innerHTML = duasToRender.map(dua => `
+                <div class="dua-card">
+                    <div class="dua-header">
+                        <h3 class="dua-title">${dua.title}</h3>
+                        <span class="dua-category">${dua.category.replace('_', ' ').toUpperCase()}</span>
+                    </div>
+                    
+                    <div class="dua-content">
+                        <p class="arabic">${dua.arabic}</p>
+                        
+                        <div class="translation">
+                            <div class="translation-title">English Translation</div>
+                            <p>${dua.english}</p>
+                        </div>
+                        
+                        <p class="urdu">${dua.urdu}</p>
+                        
+                        <p class="when"><i class="fas fa-clock"></i> ${dua.when}</p>
+                    </div>
+                    
+                    <div class="actions">
+                        <button class="favorite-btn ${favorites.includes(dua.id) ? 'favorited' : ''}" data-id="${dua.id}">
+                            <i class="fas ${favorites.includes(dua.id) ? 'fa-heart' : 'fa-heart-o'}"></i>
+                        </button>
+                        <button class="share-btn" data-id="${dua.id}">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add event listeners to new buttons
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                btn.addEventListener('click', toggleFavorite);
+            });
+            
+            document.querySelectorAll('.share-btn').forEach(btn => {
+                btn.addEventListener('click', shareDua);
+            });
+        }
+
+        // Toggle Favorite
+        function toggleFavorite(e) {
+            const id = parseInt(e.currentTarget.getAttribute('data-id'));
+            const index = favorites.indexOf(id);
+            
+            if (index > -1) {
+                favorites.splice(index, 1);
+                e.currentTarget.classList.remove('favorited');
+                e.currentTarget.innerHTML = '<i class="fas fa-heart-o"></i>';
+            } else {
+                favorites.push(id);
+                e.currentTarget.classList.add('favorited');
+                e.currentTarget.innerHTML = '<i class="fas fa-heart"></i>';
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            // Re-render if we're in favorites view
+            if (currentCategory === 'favorites') {
+                renderDuas();
+            }
+        }
+
+        // Share Dua
+        function shareDua(e) {
+            const id = parseInt(e.currentTarget.getAttribute('data-id'));
+            const dua = duas.find(d => d.id === id);
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: dua.title,
+                    text: `${dua.arabic}\n\n${dua.english}\n\n${dua.urdu}\n\nWhen: ${dua.when}`
+                }).catch(console.error);
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const text = `${dua.title}\n\n${dua.arabic}\n\n${dua.english}\n\n${dua.urdu}\n\nWhen: ${dua.when}`;
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Dua copied to clipboard!');
+            }
+        }
+
+        // Filter by Category
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // Update active button
+            categoryButtons.forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            renderDuas();
+        }
+
+        // Search Duas
+        function searchDuas() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            if (!searchTerm) {
+                renderDuas();
+                return;
+            }
+            
+            const filtered = duas.filter(dua => 
+                dua.title.toLowerCase().includes(searchTerm) ||
+                dua.arabic.includes(searchTerm) ||
+                dua.english.toLowerCase().includes(searchTerm) ||
+                dua.urdu.includes(searchTerm) ||
+                dua.when.toLowerCase().includes(searchTerm)
+            );
+            
+            renderDuas(filtered);
+        }
+
+        // Toggle Theme
+        function toggleTheme() {
+            darkMode = !darkMode;
+            localStorage.setItem('darkMode', darkMode);
+            applyTheme();
+        }
+
+        // Apply Theme
+        function applyTheme() {
+            if (darkMode) {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+            } else {
+                document.body.removeAttribute('data-theme');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+            }
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            searchInput.addEventListener('input', searchDuas);
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            categoryButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterByCategory(btn.getAttribute('data-category'));
+                });
+            });
+            
+            whatsappBtn.addEventListener('click', () => {
+                window.open('https://wa.me/923473575914', '_blank');
+            });
+        }
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
